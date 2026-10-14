@@ -191,7 +191,8 @@ The emails are simulated and the application does not send real phishing emails 
 ![Analysis Result](screenshots/02-incorrect-analyse.png)
 
 ![Correct Analyse](scrennshots/02-correct-analyse.png)
-### Dashboard
+
+### 
 
 ![Dashboard](screenshots/03-dashboard.png)
 
