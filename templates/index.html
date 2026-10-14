@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phishing Email Simulator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Phishing Email Simulator</h1>
+    <p>Cybersecurity Awareness Training</p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Email Scenarios</h2>
+        <p>
+            Analyze the emails below and determine whether
+            they are legitimate or phishing attempts.
+        </p>
+    </section>
+
+    <section class="emails">
+
+        {% for email in emails %}
+
+        <article class="email-card">
+
+            <div class="email-header">
+                <span class="company">
+                    {{ email.company }}
+                </span>
+
+                <span class="email-id">
+                    #{{ email.id }}
+                </span>
+            </div>
+
+            <div class="email-content">
+
+                <p>
+                    <strong>From:</strong>
+                    {{ email.sender }}
+                </p>
+
+                <p>
+                    <strong>Subject:</strong>
+                    {{ email.subject }}
+                </p>
+
+                <hr>
+
+                <p class="email-body">
+                    {{ email.body }}
+                </p>
+
+            </div>
+
+            <div class="actions">
+
+                <form action="/answer" method="POST">
+                    <input
+                        type="hidden"
+                        name="email_id"
+                        value="{{ email.id }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="answer"
+                        value="legitimate"
+                    >
+
+                    <button type="submit" class="legitimate">
+                        ✓ Legitimate
+                    </button>
+                </form>
+
+                <form action="/answer" method="POST">
+                    <input
+                        type="hidden"
+                        name="email_id"
+                        value="{{ email.id }}"
+                    >
+
+                    <input
+                        type="hidden"
+                        name="answer"
+                        value="phishing"
+                    >
+
+                    <button type="submit" class="phishing">
+                        ⚠ Phishing
+                    </button>
+                </form>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    </section>
+
+</main>
+
+</body>
+</html>

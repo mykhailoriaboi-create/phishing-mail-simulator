@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Result - Phishing Simulator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Phishing Email Simulator</h1>
+    <p>Analysis Result</p>
+</header>
+
+<main>
+
+    <section class="email-card">
+
+        {% if is_correct %}
+
+            <h2>✅ Correct!</h2>
+
+            <p>
+                You correctly identified this email as
+                <strong>
+                    {{ "Phishing" if email.is_phishing else "Legitimate" }}
+                </strong>.
+            </p>
+
+        {% else %}
+
+            <h2>❌ Incorrect</h2>
+
+            <p>
+                This email was actually
+                <strong>
+                    {{ "Phishing" if email.is_phishing else "Legitimate" }}
+                </strong>.
+            </p>
+
+        {% endif %}
+
+        <hr>
+
+        <h3>Security Analysis</h3>
+
+        {% if email.indicators %}
+
+            <ul>
+                {% for indicator in email.indicators %}
+                    <li>{{ indicator }}</li>
+                {% endfor %}
+            </ul>
+
+        {% else %}
+
+            <p>No major phishing indicators were detected.</p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/">
+            ← Back to emails
+        </a>
+
+    </section>
+
+</main>
+
+</body>
+</html>

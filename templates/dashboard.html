@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Phishing Simulator</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<header>
+    <h1>Phishing Awareness Dashboard</h1>
+    <p>Training Statistics</p>
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Your Statistics</h2>
+        <p>Overview of your phishing awareness training.</p>
+    </section>
+
+    <section class="stats">
+
+        <div class="stat-card">
+            <h3>Attempts</h3>
+            <p>{{ statistics.total }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Correct</h3>
+            <p>{{ statistics.correct }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Accuracy</h3>
+            <p>{{ statistics.accuracy }}%</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Phishing</h3>
+            <p>{{ statistics.phishing_answers }}</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>Legitimate</h3>
+            <p>{{ statistics.legitimate_answers }}</p>
+        </div>
+
+    </section>
+
+    <section class="history">
+
+        <h2>Recent Attempts</h2>
+
+        {% if attempts %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Scenario</th>
+                    <th>Your Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Result</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for attempt in attempts %}
+
+                <tr>
+
+                    <td>{{ attempt["id"] }}</td>
+
+                    <td>
+                        Scenario #{{ attempt["scenario_id"] }}
+                    </td>
+
+                    <td>
+                        {{ attempt["user_answer"] }}
+                    </td>
+
+                    <td>
+                        {{ attempt["correct_answer"] }}
+                    </td>
+
+                    <td>
+
+                        {% if attempt["is_correct"] %}
+                            <span class="correct">
+                                ✓ Correct
+                            </span>
+                        {% else %}
+                            <span class="incorrect">
+                                ✗ Incorrect
+                            </span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        {{ attempt["timestamp"] }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No attempts yet.</p>
+
+        {% endif %}
+
+    </section>
+
+    <br>
+
+    <a href="/">
+        ← Back to simulator
+    </a>
+
+</main>
+
+</body>
+</html>
